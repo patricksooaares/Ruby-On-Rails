@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+# Roda os testes de uma aula.
+#   ruby bin/verificar aula1
+#   ruby bin/verificar aula1 03      # só o exercício 03
+
+aula = ARGV[0] || "aula1"
+filtro = ARGV[1]
+
+raiz = File.expand_path("..", __dir__)
+pasta = File.join(raiz, aula, "testes")
+
+unless Dir.exist?(pasta)
+  if Dir.exist?(File.join(raiz, aula, "casos"))
+    puts "'#{aula}' não usa bin/verificar. Rode um caso de cada vez:"
+    puts "  ruby #{aula}/casos/NN_nome/teste.rb"
+    exit 1
+  end
+  puts "Não achei a pasta de testes de '#{aula}'."
+  puts "Use: ruby bin/verificar aula1"
+  exit 1
+end
+
+arquivos = Dir[File.join(pasta, "*_teste.rb")].sort
+arquivos.select! { |a| File.basename(a).start_with?(filtro) } if filtro
+
+if arquivos.empty?
+  puts "Nenhum teste encontrado."
+  exit 1
+end
+
+puts "Verificando #{arquivos.size} exercício(s) de #{aula}..."
+puts
+
+arquivos.each { |arquivo| require arquivo }

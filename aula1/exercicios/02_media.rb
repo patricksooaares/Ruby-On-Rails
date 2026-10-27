@@ -8,5 +8,6 @@
 # Verifique com:  ruby bin/verificar aula1 02
 
 def media(notas)
-  # escreva aqui
+  puts notas.sum.fdiv(notas.size)
+  return puts notas.sum.fdiv(notas.size)
 end

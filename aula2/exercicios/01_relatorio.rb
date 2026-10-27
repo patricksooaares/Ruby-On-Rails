@@ -11,17 +11,43 @@
 # Verifique com:  ruby bin/verificar aula2 01
 
 def produtos_vendidos(vendas)
-  # escreva aqui
+  nomes = []
+  vendas.each do |venda| 
+    unless nomes.include?(venda[:produto])
+      nomes << venda[:produto]
+    end
+  end
+  nomes
 end
 
 def total_do_produtor(vendas, produtor)
-  # escreva aqui
+  de_produtor = vendas.select { |venda| venda[produtor] = produtor }
+  de_produtor.sum{ |venda| venda[:valor_em_centavos] }
 end
 
 def total_por_produtor(vendas)
-  # escreva aqui
+  por_produtor = vendas.group_by { |venda| venda[:produtor] }
+  totais = {}
+  por_produtor.keys.esch do |produtor|
+    totais[produtor] = por_produtor[produtor].sum do |venda|
+      venda[:valor_em_centavos]
+    end
+  end
+  p totais
+end
+
+def vendas
+    [
+      { produtor: "Horta da Vila",   produto: "cenoura", valor_em_centavos: 1200 },
+      { produtor: "Sítio Boa Terra", produto: "alface",  valor_em_centavos: 800 },
+      { produtor: "Horta da Vila",   produto: "cenoura", valor_em_centavos: 450 }
+    ]
 end
 
 def ticket_medio_em_reais(vendas)
-  # escreva aqui
+  if vendas.empty?
+    0.0
+  else
+    total = vendas.sum { |venda| venda[:valor_em_centavos] }
+    total.fdiv(vendas.size) / 100.0
 end

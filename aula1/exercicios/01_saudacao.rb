@@ -6,5 +6,5 @@
 # Verifique com:  ruby bin/verificar aula1 01
 
 def saudacao(nome)
-    "Bom dia, #{}! Boas Vindas à feira."
+    "Bom dia, #{nome}! Boas Vindas à feira."
 end

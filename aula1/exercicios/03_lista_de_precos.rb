@@ -10,17 +10,12 @@
 
 def nomes(produtos)
   resultado = []
-
-  produtos.each do |produto|
-    resultado << produto[:nome]
-  end
-
+  produtos.each { |produto| resultado << produto[:nome] }
   resultado
 end
 
 def mais_caro(produtos)
-  mais_caro = produtos[0]
-
+  mais_caro = produtos.first
   produtos.each do |produto|
     if produto[:preco_em_centavos] > mais_caro[:preco_em_centavos]
       mais_caro = produto
@@ -32,10 +27,6 @@ end
 
 def total_em_reais(produtos)
   total = 0
-
-  produtos.each do |produto|
-    total += produto[:preco_em_centavos]
-  end
-
+  produtos.each { |produto| total += produto[:preco_em_centavos] }
   total / 100.0
 end
